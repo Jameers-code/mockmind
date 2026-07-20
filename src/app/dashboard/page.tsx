@@ -49,7 +49,7 @@ export default function DashboardPage() {
         // 2. Fetch local storage sessions
         let localData: SessionData[] = [];
         try {
-          const localRaw = localStorage.getItem("grill_local_sessions");
+          const localRaw = localStorage.getItem("mockmind_local_sessions");
           if (localRaw) {
             localData = JSON.parse(localRaw);
           }

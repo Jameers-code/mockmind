@@ -1,0 +1,18 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "prisma generate && next build",
+  "functions": {
+    "src/app/api/parse-resume/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/api/generate-questions/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/api/evaluate-answer/route.ts": {
+      "maxDuration": 30
+    },
+    "src/app/api/generate-report/route.ts": {
+      "maxDuration": 30
+    }
+  }
+}

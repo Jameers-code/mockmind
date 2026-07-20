@@ -10,20 +10,20 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Header() {
   const { data: session, status } = useSession();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [mockEmail, setMockEmail] = useState("candidate@grillai.io");
+  const [mockEmail, setMockEmail] = useState("candidate@mockmind.io");
   const [mockName, setMockName] = useState("Candidate One");
   const [isBypassing, setIsBypassing] = useState(false);
 
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [provider, setProvider] = useState(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("grill_ai_provider") || "groq";
+      return localStorage.getItem("mockmind_ai_provider") || "groq";
     }
     return "groq";
   });
   const [apiKeyInput, setApiKeyInput] = useState(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("grill_api_key") || process.env.NEXT_PUBLIC_GROQ_API_KEY || "";
+      return localStorage.getItem("mockmind_api_key") || process.env.NEXT_PUBLIC_GROQ_API_KEY || "";
     }
     return "";
   });
@@ -40,8 +40,8 @@ export default function Header() {
 
   const handleSaveSettings = (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem("grill_ai_provider", provider);
-    localStorage.setItem("grill_api_key", apiKeyInput);
+    localStorage.setItem("mockmind_ai_provider", provider);
+    localStorage.setItem("mockmind_api_key", apiKeyInput);
     toast.success("AI CONFIGURATION UPDATED");
     setShowSettingsModal(false);
     // Reload page to apply key configuration
@@ -68,7 +68,7 @@ export default function Header() {
           <Link href="/" className="flex items-center space-x-2 group">
             <Terminal className="h-5 w-5 text-orange-400 group-hover:rotate-12 transition-transform duration-300" />
             <span className="text-lg font-bold tracking-widest text-white group-hover:text-orange-400 transition-colors">
-              GRILL<span className="text-orange-400">AI</span>
+              MOCK<span className="text-orange-400">MIND</span>
             </span>
           </Link>
  
@@ -87,8 +87,8 @@ export default function Header() {
             <button
               type="button"
               onClick={() => {
-                setProvider(localStorage.getItem("grill_ai_provider") || "groq");
-                setApiKeyInput(localStorage.getItem("grill_api_key") || process.env.NEXT_PUBLIC_GROQ_API_KEY || "");
+                setProvider(localStorage.getItem("mockmind_ai_provider") || "groq");
+                setApiKeyInput(localStorage.getItem("mockmind_api_key") || process.env.NEXT_PUBLIC_GROQ_API_KEY || "");
                 setShowSettingsModal(true);
               }}
               className="flex items-center justify-center p-1.5 rounded-lg border border-zinc-800 bg-zinc-900/30 hover:bg-zinc-900 hover:border-zinc-750 text-zinc-400 hover:text-white transition-all duration-300"

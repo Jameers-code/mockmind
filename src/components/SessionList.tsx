@@ -26,15 +26,15 @@ export default function SessionList({ sessions }: { sessions: DbSession[] }) {
 
   const handleSessionClick = (session: DbSession) => {
     // Populate session storage with old session values
-    sessionStorage.setItem("grill_jobRole", session.role);
-    sessionStorage.setItem("grill_difficulty", session.difficulty);
-    sessionStorage.setItem("grill_interviewType", session.type);
+    sessionStorage.setItem("mockmind_jobRole", session.role);
+    sessionStorage.setItem("mockmind_difficulty", session.difficulty);
+    sessionStorage.setItem("mockmind_interviewType", session.type);
     
     // Storing past Q&A
     const questionsList = typeof session.questions === "string" 
       ? JSON.parse(session.questions) 
       : session.questions;
-    sessionStorage.setItem("grill_answers", JSON.stringify(questionsList));
+    sessionStorage.setItem("mockmind_answers", JSON.stringify(questionsList));
 
     // Construct cached report
     const reportData = {
@@ -46,7 +46,7 @@ export default function SessionList({ sessions }: { sessions: DbSession[] }) {
       strengths: typeof session.strengths === "string" ? JSON.parse(session.strengths) : session.strengths,
       improvements: typeof session.improvements === "string" ? JSON.parse(session.improvements) : session.improvements,
     };
-    sessionStorage.setItem("grill_cachedReport", JSON.stringify(reportData));
+    sessionStorage.setItem("mockmind_cachedReport", JSON.stringify(reportData));
 
     router.push("/results");
   };

@@ -29,9 +29,9 @@ export default function SetupPage() {
 
   const updateProfileId = (newId: string) => {
     setProfileId(newId);
-    localStorage.setItem("grill_last_profile_id", newId);
+    localStorage.setItem("mockmind_last_profile_id", newId);
 
-    const keyPrefix = newId ? `grill_profile_${newId}` : "grill_profile_default";
+    const keyPrefix = newId ? `mockmind_profile_${newId}` : "mockmind_profile_default";
     const savedCV = localStorage.getItem(`${keyPrefix}_cv`) || "";
     const savedRole = localStorage.getItem(`${keyPrefix}_jobRole`) || "Frontend Engineer";
     const savedType = localStorage.getItem(`${keyPrefix}_interviewType`) || "Technical";
@@ -45,37 +45,37 @@ export default function SetupPage() {
 
   const updateResumeText = (newText: string) => {
     setResumeText(newText);
-    const keyPrefix = profileId ? `grill_profile_${profileId}` : "grill_profile_default";
+    const keyPrefix = profileId ? `mockmind_profile_${profileId}` : "mockmind_profile_default";
     localStorage.setItem(`${keyPrefix}_cv`, newText);
   };
 
   const updateJobRole = (newRole: string) => {
     setJobRole(newRole);
-    const keyPrefix = profileId ? `grill_profile_${profileId}` : "grill_profile_default";
+    const keyPrefix = profileId ? `mockmind_profile_${profileId}` : "mockmind_profile_default";
     localStorage.setItem(`${keyPrefix}_jobRole`, newRole);
   };
 
   const updateInterviewType = (newType: InterviewType) => {
     setInterviewType(newType);
-    const keyPrefix = profileId ? `grill_profile_${profileId}` : "grill_profile_default";
+    const keyPrefix = profileId ? `mockmind_profile_${profileId}` : "mockmind_profile_default";
     localStorage.setItem(`${keyPrefix}_interviewType`, newType);
   };
 
   const updateDifficulty = (newDifficulty: Difficulty) => {
     setDifficulty(newDifficulty);
-    const keyPrefix = profileId ? `grill_profile_${profileId}` : "grill_profile_default";
+    const keyPrefix = profileId ? `mockmind_profile_${profileId}` : "mockmind_profile_default";
     localStorage.setItem(`${keyPrefix}_difficulty`, newDifficulty);
   };
 
   React.useEffect(() => {
-    const key = localStorage.getItem("grill_api_key");
+    const key = localStorage.getItem("mockmind_api_key");
     const defaultKeySet = process.env.NEXT_PUBLIC_HAS_DEFAULT_KEY === "true";
     setHasApiKey(!!key || defaultKeySet);
 
-    const lastProfileId = localStorage.getItem("grill_last_profile_id") || "";
+    const lastProfileId = localStorage.getItem("mockmind_last_profile_id") || "";
     setProfileId(lastProfileId);
 
-    const keyPrefix = lastProfileId ? `grill_profile_${lastProfileId}` : "grill_profile_default";
+    const keyPrefix = lastProfileId ? `mockmind_profile_${lastProfileId}` : "mockmind_profile_default";
     const savedCV = localStorage.getItem(`${keyPrefix}_cv`) || "";
     const savedRole = localStorage.getItem(`${keyPrefix}_jobRole`) || "Frontend Engineer";
     const savedType = localStorage.getItem(`${keyPrefix}_interviewType`) || "Technical";
@@ -172,8 +172,8 @@ export default function SetupPage() {
     }, 1800);
 
     try {
-      const apiKey = localStorage.getItem("grill_api_key") || "";
-      const apiProvider = localStorage.getItem("grill_ai_provider") || "groq";
+      const apiKey = localStorage.getItem("mockmind_api_key") || "";
+      const apiProvider = localStorage.getItem("mockmind_ai_provider") || "groq";
 
       const response = await fetch("/api/generate-questions", {
         method: "POST",
@@ -201,13 +201,13 @@ export default function SetupPage() {
       }
 
       // Save configurations to session storage
-      sessionStorage.setItem("grill_resumeText", resumeText);
-      sessionStorage.setItem("grill_jobRole", jobRole);
-      sessionStorage.setItem("grill_interviewType", interviewType);
-      sessionStorage.setItem("grill_difficulty", difficulty);
-      sessionStorage.setItem("grill_questions", JSON.stringify(questions));
-      sessionStorage.setItem("grill_answers", JSON.stringify([]));
-      sessionStorage.removeItem("grill_cachedReport");
+      sessionStorage.setItem("mockmind_resumeText", resumeText);
+      sessionStorage.setItem("mockmind_jobRole", jobRole);
+      sessionStorage.setItem("mockmind_interviewType", interviewType);
+      sessionStorage.setItem("mockmind_difficulty", difficulty);
+      sessionStorage.setItem("mockmind_questions", JSON.stringify(questions));
+      sessionStorage.setItem("mockmind_answers", JSON.stringify([]));
+      sessionStorage.removeItem("mockmind_cachedReport");
 
       clearInterval(stepInterval);
       

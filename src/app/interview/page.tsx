@@ -169,10 +169,10 @@ export default function InterviewPage() {
 
   // Load config on mount
   useEffect(() => {
-    const storedResume = sessionStorage.getItem("grill_resumeText");
-    const storedRole = sessionStorage.getItem("grill_jobRole");
-    const storedDiff = sessionStorage.getItem("grill_difficulty");
-    const storedQuestionsStr = sessionStorage.getItem("grill_questions");
+    const storedResume = sessionStorage.getItem("mockmind_resumeText");
+    const storedRole = sessionStorage.getItem("mockmind_jobRole");
+    const storedDiff = sessionStorage.getItem("mockmind_difficulty");
+    const storedQuestionsStr = sessionStorage.getItem("mockmind_questions");
 
     if (!storedResume || !storedRole || !storedQuestionsStr) {
       toast.error("NO ACTIVE SESSION DETECTED. REDIRECTING...");
@@ -219,7 +219,7 @@ export default function InterviewPage() {
       setUserAnswer(serializeSpreadsheet(template));
     }
 
-    const key = localStorage.getItem("grill_api_key");
+    const key = localStorage.getItem("mockmind_api_key");
     const defaultKeySet = process.env.NEXT_PUBLIC_HAS_DEFAULT_KEY === "true";
     setHasApiKey(!!key || defaultKeySet);
   }, [router]);
@@ -259,8 +259,8 @@ export default function InterviewPage() {
     const currentQuestion = questions[currentIdx];
 
     try {
-      const apiKey = localStorage.getItem("grill_api_key") || "";
-      const apiProvider = localStorage.getItem("grill_ai_provider") || "groq";
+      const apiKey = localStorage.getItem("mockmind_api_key") || "";
+      const apiProvider = localStorage.getItem("mockmind_ai_provider") || "groq";
 
       const isCodingQuestion = currentQuestion.startsWith("[CODING]") || 
         currentQuestion.startsWith("[SQL]") ||
@@ -302,7 +302,7 @@ export default function InterviewPage() {
 
       const updatedAnswers = [...answersList, newAnswer];
       setAnswersList(updatedAnswers);
-      sessionStorage.setItem("grill_answers", JSON.stringify(updatedAnswers));
+      sessionStorage.setItem("mockmind_answers", JSON.stringify(updatedAnswers));
 
       // Display feedback transition
       setCurrentScore(evalData.score);
@@ -337,7 +337,7 @@ export default function InterviewPage() {
 
     const updatedAnswers = [...answersList, skippedAnswer];
     setAnswersList(updatedAnswers);
-    sessionStorage.setItem("grill_answers", JSON.stringify(updatedAnswers));
+    sessionStorage.setItem("mockmind_answers", JSON.stringify(updatedAnswers));
 
     setCurrentScore(1.0);
     setCurrentHint("Question skipped.");

@@ -17,12 +17,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GrillAI | Premium AI Interview Simulator",
-  description: "Paste your resume. Choose a target role. Get grilled by technical AI. Built to make you hireable.",
+  title: "MockMind | AI Interview Simulator",
+  description: "Upload your resume, pick a role, and get AI-generated interview questions tailored to your experience. Real-time scoring and feedback.",
   metadataBase: new URL("http://localhost:3000"),
   openGraph: {
-    title: "GrillAI | Premium AI Interview Simulator",
-    description: "Get interview-ready with real-time AI grilling tailored to your resume.",
+    title: "MockMind | AI Interview Simulator",
+    description: "Practice interviews with AI. Get scored on technical depth, communication, clarity, and confidence.",
     type: "website",
   },
 };

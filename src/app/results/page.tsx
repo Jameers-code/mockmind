@@ -66,10 +66,10 @@ export default function ResultsPage() {
   const [report, setReport] = useState<FinalReport | null>(null);
 
   useEffect(() => {
-    const storedAnswers = sessionStorage.getItem("grill_answers");
-    const storedRole = sessionStorage.getItem("grill_jobRole");
-    const storedDiff = sessionStorage.getItem("grill_difficulty");
-    const storedType = sessionStorage.getItem("grill_interviewType");
+    const storedAnswers = sessionStorage.getItem("mockmind_answers");
+    const storedRole = sessionStorage.getItem("mockmind_jobRole");
+    const storedDiff = sessionStorage.getItem("mockmind_difficulty");
+    const storedType = sessionStorage.getItem("mockmind_interviewType");
 
     if (!storedAnswers || !storedRole) {
       toast.error("NO INTERVIEW DATA FOUND. REDIRECTING...");
@@ -84,7 +84,7 @@ export default function ResultsPage() {
     setInterviewType(storedType || "Mixed");
 
     // Check if we already have a cached report in sessionStorage (e.g. from Dashboard or previous page load)
-    const cachedReport = sessionStorage.getItem("grill_cachedReport");
+    const cachedReport = sessionStorage.getItem("mockmind_cachedReport");
     if (cachedReport) {
       try {
         setReport(JSON.parse(cachedReport));
@@ -98,8 +98,8 @@ export default function ResultsPage() {
     // Fetch report from API
     const fetchReport = async () => {
       try {
-        const apiKey = localStorage.getItem("grill_api_key") || "";
-        const apiProvider = localStorage.getItem("grill_ai_provider") || "groq";
+        const apiKey = localStorage.getItem("mockmind_api_key") || "";
+        const apiProvider = localStorage.getItem("mockmind_ai_provider") || "groq";
 
         const response = await fetch("/api/generate-report", {
           method: "POST",
@@ -124,11 +124,11 @@ export default function ResultsPage() {
         setReport(data);
         
         // Cache report to sessionStorage
-        sessionStorage.setItem("grill_cachedReport", JSON.stringify(data));
+        sessionStorage.setItem("mockmind_cachedReport", JSON.stringify(data));
 
         // Save to localStorage for persistent dashboard display (read-only database bypass)
         try {
-          const localSessionsRaw = localStorage.getItem("grill_local_sessions");
+          const localSessionsRaw = localStorage.getItem("mockmind_local_sessions");
           const localSessions = localSessionsRaw ? JSON.parse(localSessionsRaw) : [];
           
           // Avoid duplicates
@@ -155,7 +155,7 @@ export default function ResultsPage() {
               confidence: data.confidence,
               createdAt: new Date().toISOString()
             });
-            localStorage.setItem("grill_local_sessions", JSON.stringify(localSessions));
+            localStorage.setItem("mockmind_local_sessions", JSON.stringify(localSessions));
           }
         } catch (e) {
           console.error("Failed to save local session to localStorage", e);
@@ -174,7 +174,7 @@ export default function ResultsPage() {
 
   const handleShare = () => {
     if (!report) return;
-    const summary = `GrillAI Interview Report - ${jobRole} (${difficulty})
+    const summary = `MockMind Interview Report - ${jobRole} (${difficulty})
 Overall Score: ${report.overallScore}/10
 - Communication: ${report.communication}/10
 - Technical Depth: ${report.technicalDepth}/10
@@ -185,16 +185,15 @@ Strengths:
 1. ${report.strengths[0]}
 2. ${report.strengths[1]}
 
-Practice your interviews at GrillAI!`;
+Practice your interviews at MockMind!`;
 
     navigator.clipboard.writeText(summary);
     toast.success("SUMMARY COPIED TO CLIPBOARD");
   };
 
   const handleTryAgain = () => {
-    // Keep configurations, clear answers and restart
-    sessionStorage.setItem("grill_answers", JSON.stringify([]));
-    sessionStorage.removeItem("grill_cachedReport");
+    sessionStorage.setItem("mockmind_answers", JSON.stringify([]));
+    sessionStorage.removeItem("mockmind_cachedReport");
     toast.success("RE-INITIALIZING SIMULATOR...");
     router.push("/setup");
   };

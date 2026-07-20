@@ -156,7 +156,7 @@ export default function LandingPage() {
   const ctaY = useTransform(ctaProgress, [0, 1], [60, -60]);
 
   useEffect(() => {
-    const key = localStorage.getItem("grill_api_key");
+    const key = localStorage.getItem("mockmind_api_key");
     const defaultKeySet = process.env.NEXT_PUBLIC_HAS_DEFAULT_KEY === "true";
     setHasApiKey(!!key || defaultKeySet);
   }, []);
@@ -206,7 +206,7 @@ export default function LandingPage() {
             className="space-y-6"
           >
             <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight leading-[1.05]">
-              <span className="text-white">Get grilled.</span>
+              <span className="text-white">Think smart.</span>
               <br />
               <span className="text-white">Get </span>
               <motion.span
@@ -386,7 +386,7 @@ export default function LandingPage() {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mx-auto text-center relative z-10 space-y-8"
         >
-          <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white">Ready to get grilled?</h2>
+          <h2 className="text-4xl sm:text-6xl md:text-7xl font-bold text-white">Ready to ace your interview?</h2>
           <p className="text-zinc-400 text-lg sm:text-xl max-w-lg mx-auto">
             Your next interview doesn&apos;t have to be your first practice run.
           </p>
@@ -408,15 +408,15 @@ export default function LandingPage() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8 relative z-10">
           <div className="space-y-2">
             <span className="text-2xl font-bold tracking-wider text-white">
-              GRILL<span className="text-orange-400">AI</span>
+              MOCK<span className="text-orange-400">MIND</span>
             </span>
             <p className="text-xs font-semibold text-zinc-550 tracking-widest uppercase">
-              Fueled by Fire. Powered by AI.
+              Practice Smart. Interview Sharp.
             </p>
           </div>
           <div className="text-left md:text-right">
             <p className="text-xs text-zinc-600 font-semibold tracking-wider uppercase">
-              © 2026 GrillAI • Built by Sahaj Sharma
+              © 2026 MockMind • Built by Jameer
             </p>
           </div>
         </div>
