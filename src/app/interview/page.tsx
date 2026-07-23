@@ -661,7 +661,30 @@ export default function InterviewPage() {
                 </div>
               </div>
             ) : (
-              <textarea
+              <div className="space-y-4">
+                {/* Warnings */}
+                {timer > 0 && timer < 90 && userAnswer.trim() && (
+                  <div className="flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 text-xs">
+                    <span className="text-amber-400 font-semibold">⏱️ Warming up:</span>
+                    <span className="text-amber-300">{90 - timer}s to submit before 90-second mark</span>
+                  </div>
+                )}
+                
+                {timer >= 90 && userAnswer.trim() && (
+                  <div className="flex items-center gap-2 bg-rose-500/10 border border-rose-500/20 rounded-lg px-3 py-2 text-xs animate-pulse">
+                    <span className="text-rose-400 font-semibold">⚠️ 90+ seconds:</span>
+                    <span className="text-rose-300">Consider submitting soon to manage time</span>
+                  </div>
+                )}
+                
+                {userAnswer.trim() && wordCount < 20 && (
+                  <div className="flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-lg px-3 py-2 text-xs">
+                    <span className="text-blue-400 font-semibold">✏️ Short answer:</span>
+                    <span className="text-blue-300">{20 - wordCount} more words recommended</span>
+                  </div>
+                )}
+
+                <textarea
                 disabled={isSubmitting || showFeedback}
                 value={userAnswer}
                 onChange={(e) => setUserAnswer(e.target.value)}
