@@ -4,8 +4,9 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
-import { RefreshCw, Plus, Share2, Check, AlertCircle } from "lucide-react";
+import { RefreshCw, Plus, Share2, Check, AlertCircle, Download } from "lucide-react";
 import Header from "@/components/Header";
+import { exportToPDF } from "@/lib/pdf-export";
 
 interface AnsweredQuestion {
   question: string;
@@ -64,6 +65,7 @@ export default function ResultsPage() {
   
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState<FinalReport | null>(null);
+  const [exporting, setExporting] = useState(false);
 
   useEffect(() => {
     const storedAnswers = sessionStorage.getItem("mockmind_answers");
@@ -191,6 +193,22 @@ Practice your interviews at MockMind!`;
     toast.success("SUMMARY COPIED TO CLIPBOARD");
   };
 
+  const handleExportPDF = async () => {
+    setExporting(true);
+    try {
+      await exportToPDF("report-container", {
+        filename: `MockMind-Report-${jobRole}-${new Date().toISOString().split("T")[0]}.pdf`,
+        title: `MockMind Interview Report - ${jobRole}`,
+      });
+      toast.success("REPORT EXPORTED AS PDF");
+    } catch (error) {
+      toast.error("Failed to export PDF. Try again.");
+      console.error(error);
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const handleTryAgain = () => {
     sessionStorage.setItem("mockmind_answers", JSON.stringify([]));
     sessionStorage.removeItem("mockmind_cachedReport");
@@ -229,7 +247,7 @@ Practice your interviews at MockMind!`;
       <main className="flex-grow max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8 relative z-20">
         
         {/* Top Section: Score Breakdown */}
-        <section className="border border-zinc-800 bg-[#18181b] rounded-xl p-6 sm:p-8 flex flex-col md:flex-row justify-between items-center gap-8 relative overflow-hidden shadow-sm">
+        <section id="report-container" className="space-y-8 bg-black rounded-xl p-6 sm:p-8">
           <div className="text-center md:text-left space-y-2">
             <span className="text-xs font-semibold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-1 rounded-lg uppercase">
               Session Completed
@@ -350,6 +368,15 @@ Practice your interviews at MockMind!`;
               </button>
 
               <button
+                onClick={handleExportPDF}
+                disabled={exporting}
+                className="flex items-center justify-center space-x-2 bg-orange-600 hover:bg-orange-700 disabled:opacity-50 text-white px-4 py-3 rounded-lg transition-all duration-200"
+              >
+                <Download className="h-4 w-4" />
+                <span>{exporting ? "Exporting..." : "Download PDF"}</span>
+              </button>
+
+              <button
                 onClick={handleTryAgain}
                 className="flex items-center justify-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-3 rounded-lg transition-all duration-205"
               >
@@ -359,7 +386,7 @@ Practice your interviews at MockMind!`;
 
               <button
                 onClick={() => router.push("/setup")}
-                className="col-span-1 sm:col-span-2 flex items-center justify-center space-x-2 border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 px-4 py-3 rounded-lg text-white transition-all duration-200"
+                className="flex items-center justify-center space-x-2 border border-zinc-800 bg-zinc-950 hover:bg-zinc-900 px-4 py-3 rounded-lg text-white transition-all duration-200"
               >
                 <Plus className="h-4 w-4 text-zinc-450" />
                 <span>New Simulation Profile</span>
@@ -443,7 +470,6 @@ Practice your interviews at MockMind!`;
             ))}
           </div>
         </section>
-
       </main>
     </div>
   );
